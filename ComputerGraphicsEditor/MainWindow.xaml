@@ -13,12 +13,12 @@
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 </Style>
             </ListView.ItemContainerStyle>
-            
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Алгоритм" DisplayMemberBinding="{Binding Path=IsMyAlgorythm}" Width="100"/>
-                    <GridViewColumn Header="Параметры" DisplayMemberBinding="{Binding Path=Parameters}" Width="100"/>
                     <GridViewColumn Header="Тип примитива" DisplayMemberBinding="{Binding Path=Type}" Width="100"/>
+                    <GridViewColumn Header="Цвет" DisplayMemberBinding="{Binding Path=Color}" Width="40"/>
+                    <GridViewColumn Header="Параметры" DisplayMemberBinding="{Binding Path=Parameters}" Width="100"/>
+                    <GridViewColumn Header="Алгоритм" DisplayMemberBinding="{Binding Path=IsMyAlgorythm}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -41,13 +41,13 @@
         <ScrollViewer DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Visible" CanHorizontallyScroll="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top">
                 <Label>Отрезок из точки (</Label>
-                <TextBox Name="TextBoxX1" VerticalAlignment="Center" TextChanged="TextBox_ValidateNumber"></TextBox>
+                <TextBox Name="TextBoxX1" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
                 <Label>,</Label>
-                <TextBox Name="TextBoxY1" VerticalAlignment="Center"></TextBox>
+                <TextBox Name="TextBoxY1" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
                 <Label>) в точку (</Label>
-                <TextBox Name="TextBoxX2" VerticalAlignment="Center"></TextBox>
+                <TextBox Name="TextBoxX2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
                 <Label>,</Label>
-                <TextBox Name="TextBoxY2" VerticalAlignment="Center"></TextBox>
+                <TextBox Name="TextBoxY2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
                 <Label>).</Label>
                 <Button VerticalAlignment="Center" Click="Button_Click">Нарисовать</Button>
             </StackPanel>

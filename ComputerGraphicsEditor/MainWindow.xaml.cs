@@ -30,11 +30,11 @@ namespace ComputerGraphicsEditor
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            long
-                x1 = long.Parse(TextBoxX1.Text.Replace('.', ',')),
-                y1 = long.Parse(TextBoxY1.Text.Replace('.', ',')),
-                x2 = long.Parse(TextBoxX2.Text.Replace('.', ',')),
-                y2 = long.Parse(TextBoxY2.Text.Replace('.', ','));
+            int
+                x1 = int.Parse(TextBoxX1.Text),
+                y1 = int.Parse(TextBoxY1.Text),
+                x2 = int.Parse(TextBoxX2.Text),
+                y2 = int.Parse(TextBoxY2.Text);
             DisplayedElements.ItemsSource = new List<ElementRecord>() { new ElementRecord(Types.Segment, new List<int>() { 1, 2, 3 }, true) };
         }
         private enum Types { Segment, Circle, Ellips }
@@ -57,8 +57,19 @@ namespace ComputerGraphicsEditor
             public string IsMyAlgorythm { get; }
         }
 
+        string textBeforeInput;
         private void TextBox_ValidateNumber(object sender, TextChangedEventArgs e)
         {
+            int index = (sender as TextBox).CaretIndex;
+            if (Regex.IsMatch((sender as TextBox).Text, @"^(-|\+)?\d*$"))
+                return;
+            (sender as TextBox).Text = textBeforeInput;
+            (sender as TextBox).CaretIndex = index - 1;
+        }
+
+        private void TextBox_PreviewTextInput(object sender, EventArgs e)
+        {
+            textBeforeInput = (sender as TextBox).Text;
         }
     }
 }

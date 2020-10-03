@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerGraphicsEditor", "ComputerGraphicsEditor\ComputerGraphicsEditor.csproj", "{AD9AF18D-E1EB-4F2A-B59C-86C712E4D1BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorCanvasLib", "EditorCanvas\EditorCanvasLib.csproj", "{685AE297-D9A2-437C-A380-480635650958}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD9AF18D-E1EB-4F2A-B59C-86C712E4D1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD9AF18D-E1EB-4F2A-B59C-86C712E4D1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD9AF18D-E1EB-4F2A-B59C-86C712E4D1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD9AF18D-E1EB-4F2A-B59C-86C712E4D1BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{685AE297-D9A2-437C-A380-480635650958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{685AE297-D9A2-437C-A380-480635650958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{685AE297-D9A2-437C-A380-480635650958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{685AE297-D9A2-437C-A380-480635650958}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94706478-E821-4837-9959-BDF1FA429DDA}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,57 @@
+﻿<Window x:Class="ComputerGraphicsEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComputerGraphicsEditor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <DockPanel>
+        <ListView Name="DisplayedElements" DockPanel.Dock="Right">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Алгоритм" DisplayMemberBinding="{Binding Path=IsMyAlgorythm}" Width="100"/>
+                    <GridViewColumn Header="Параметры" DisplayMemberBinding="{Binding Path=Parameters}" Width="100"/>
+                    <GridViewColumn Header="Тип примитива" DisplayMemberBinding="{Binding Path=Type}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Отрезок">
+                <MenuItem Name="MenuItem_Segment_MyAlgorithm" IsChecked="True" Header="Алгоритм Брезенхема"/>
+                <MenuItem Name="MenuItem_Segment_ImplementedAlgorythm" Header="Встроенный алгоритм"/>
+            </MenuItem>
+            <MenuItem Header="Окружность">
+                <MenuItem Name="MenuItem_Circle_MyAlgorithm" Header="Алгоритм Брезенхема"/>
+                <MenuItem Name="MenuItem_Circle_ImplementedAlgorythm" Header="Встроенный алгоритм"/>
+            </MenuItem>
+            <MenuItem Header="Эллипс">
+                <MenuItem Name="MenuItem_Ellipse_MyAlgorithm" Header="Алгоритм Брезенхема"/>
+                <MenuItem Name="MenuItem_Ellipse_ImplementedAlgorythm" Header="Встроенный алгоритм"/>
+            </MenuItem>
+            <MenuItem Header="Заливка"/>
+            <MenuItem Header="Отсечение"/>
+        </Menu>
+        <ScrollViewer DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Visible" CanHorizontallyScroll="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top">
+                <Label>Отрезок из точки (</Label>
+                <TextBox Name="TextBoxX1" VerticalAlignment="Center" TextChanged="TextBox_ValidateNumber"></TextBox>
+                <Label>,</Label>
+                <TextBox Name="TextBoxY1" VerticalAlignment="Center"></TextBox>
+                <Label>) в точку (</Label>
+                <TextBox Name="TextBoxX2" VerticalAlignment="Center"></TextBox>
+                <Label>,</Label>
+                <TextBox Name="TextBoxY2" VerticalAlignment="Center"></TextBox>
+                <Label>).</Label>
+                <Button VerticalAlignment="Center" Click="Button_Click">Нарисовать</Button>
+            </StackPanel>
+        </ScrollViewer>
+        <Image Name="ResultingImage"/>
+    </DockPanel>
+</Window>

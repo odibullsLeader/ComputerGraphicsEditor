@@ -17,47 +17,65 @@ using EditorCanvasLib;
 
 namespace ComputerGraphicsEditor
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+    public enum Types { Segment, Circle, Ellips }
+    public enum SegmentAlgorithms { Standard, Bresenham }
+    public interface IPrimitive
+    {
+        public Types Type { get; }
+        public Enum Algorithm { get; }
+        public Color Color { get; }
+        public string Description { get; }
+
+    }
+
+    public class Segment : IPrimitive
+    {
+
+        public Types Type => Types.Segment;
+
+        public Enum Algorithm { get; }
+
+        public Color Color { get; }
+        public string Description => $"({start.Item1}, {start.Item2}) - ({terminal.Item1}, {terminal.Item2})";
+        
+        private (int, int) start, terminal;
+        public Segment((int, int) startPoint, (int, int) terminalPoint, Color color, SegmentAlgorithms algorithm)
+        {
+            Color = color;
+            Algorithm = algorithm;
+            start = startPoint;
+            terminal = terminalPoint;
+        }
+
+    }
+
     public partial class MainWindow : Window
     {
-        private readonly EditorCanvas canvas = new EditorCanvas();
+        private readonly EditorCanvas canvas;
 
         public MainWindow()
         {
             InitializeComponent();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void DrawSegmentButton_Click(object sender, RoutedEventArgs e)
         {
-            int
-                x1 = int.Parse(TextBoxX1.Text),
-                y1 = int.Parse(TextBoxY1.Text),
-                x2 = int.Parse(TextBoxX2.Text),
-                y2 = int.Parse(TextBoxY2.Text);
-            DisplayedElements.ItemsSource = new List<ElementRecord>() { new ElementRecord(Types.Segment, new List<int>() { 1, 2, 3 }, true) };
-        }
-        private enum Types { Segment, Circle, Ellips }
-        private readonly struct ElementRecord
-        {
-            public ElementRecord(Types elementType, List<int> parameters, bool isMyAlgorythm)
+            if (TextBoxSegmentX1.Text == string.Empty ||
+                TextBoxSegmentY1.Text == string.Empty ||
+                TextBoxSegmentX2.Text == string.Empty ||
+                TextBoxSegmentY2.Text == string.Empty)
             {
-                Type = elementType switch
-                {
-                    Types.Segment => "Отрезок",
-                    Types.Circle => "Окружность",
-                    Types.Ellips => "Эллипс",
-                    _ => "ERROR"
-                };
-                IsMyAlgorythm = isMyAlgorythm ? "Алексеев В Д" : "Брезенхем Дж Э";
-                Parameters = parameters[0] + parameters.Skip(1).Aggregate<int, string>("", (str, param) => str + ", " + param);
+                MessageBox.Show("Остались незаполненные поля!");
+                return;
             }
-            public string Type { get; }
-            public string Parameters { get; }
-            public string IsMyAlgorythm { get; }
+                int
+                x1 = int.Parse(TextBoxSegmentX1.Text),
+                y1 = int.Parse(TextBoxSegmentY1.Text),
+                x2 = int.Parse(TextBoxSegmentX2.Text),
+                y2 = int.Parse(TextBoxSegmentY2.Text);
+
         }
 
-        string textBeforeInput;
+        private string textBeforeInput;
         private void TextBox_ValidateNumber(object sender, TextChangedEventArgs e)
         {
             int index = (sender as TextBox).CaretIndex;

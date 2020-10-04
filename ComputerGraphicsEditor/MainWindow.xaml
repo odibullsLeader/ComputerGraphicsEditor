@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComputerGraphicsEditor"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="4500" Width="900">
     <DockPanel>
         <ListView Name="DisplayedElements" DockPanel.Dock="Right">
             <ListView.ItemContainerStyle>
@@ -22,36 +23,47 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Отрезок">
-                <MenuItem Name="MenuItem_Segment_MyAlgorithm" IsChecked="True" Header="Алгоритм Брезенхема"/>
-                <MenuItem Name="MenuItem_Segment_ImplementedAlgorythm" Header="Встроенный алгоритм"/>
-            </MenuItem>
-            <MenuItem Header="Окружность">
-                <MenuItem Name="MenuItem_Circle_MyAlgorithm" Header="Алгоритм Брезенхема"/>
-                <MenuItem Name="MenuItem_Circle_ImplementedAlgorythm" Header="Встроенный алгоритм"/>
-            </MenuItem>
-            <MenuItem Header="Эллипс">
-                <MenuItem Name="MenuItem_Ellipse_MyAlgorithm" Header="Алгоритм Брезенхема"/>
-                <MenuItem Name="MenuItem_Ellipse_ImplementedAlgorythm" Header="Встроенный алгоритм"/>
-            </MenuItem>
-            <MenuItem Header="Заливка"/>
-            <MenuItem Header="Отсечение"/>
-        </Menu>
-        <ScrollViewer DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Visible" CanHorizontallyScroll="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top">
-                <Label>Отрезок из точки (</Label>
-                <TextBox Name="TextBoxX1" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                <Label>,</Label>
-                <TextBox Name="TextBoxY1" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                <Label>) в точку (</Label>
-                <TextBox Name="TextBoxX2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                <Label>,</Label>
-                <TextBox Name="TextBoxY2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                <Label>).</Label>
-                <Button VerticalAlignment="Center" Click="Button_Click">Нарисовать</Button>
-            </StackPanel>
-        </ScrollViewer>
+        <TabControl DockPanel.Dock="Top">
+            <TabItem Header="Отрезок">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Отрезок из точки (</Label>
+                        <TextBox Name="TextBoxSegmentX1" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>,</Label>
+                        <TextBox Name="TextBoxSegmentY1" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>) в точку (</Label>
+                        <TextBox Name="TextBoxSegmentX2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>,</Label>
+                        <TextBox Name="TextBoxSegmentY2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>)</Label>
+                        <Button x:Name="DrawSegmentButton" VerticalAlignment="Center" Click="DrawSegmentButton_Click">Нарисовать</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Цвет:</Label>
+                        <xctk:ColorPicker Name="ColorPickerSegmentColor" SelectedColor="Black" Width="40"></xctk:ColorPicker>
+                        <Label>Алгоритм:</Label>
+                        <ComboBox Name="ComboBoxSegmentAlgotithm">
+                            <ComboBoxItem IsSelected="True">Стандартный</ComboBoxItem>
+                            <ComboBoxItem>Брезенхема</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Окружность">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Цвет:</Label>
+                        <xctk:ColorPicker Name="ColorPickerCircleColor" SelectedColor="Black" Width="40"></xctk:ColorPicker>
+                        <Label>Алгоритм:</Label>
+                        <ComboBox Name="ComboBoxCircleAlgotithm">
+                            <ComboBoxItem IsSelected="True">Стандартный</ComboBoxItem>
+                            <ComboBoxItem>Брезенхема</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
         <Image Name="ResultingImage"/>
     </DockPanel>
 </Window>

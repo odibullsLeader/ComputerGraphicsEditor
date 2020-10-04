@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:ComputerGraphicsEditor"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="4500" Width="900">
+        Title="MainWindow" Height="450" Width="900">
     <DockPanel>
-        <ListView Name="DisplayedElements" DockPanel.Dock="Right">
+        <ListView Name="ListViewDisplayedElements" DockPanel.Dock="Right">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -16,10 +16,10 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Тип примитива" DisplayMemberBinding="{Binding Path=Type}" Width="100"/>
+                    <GridViewColumn Header="Тип примитива" DisplayMemberBinding="{Binding Path=TypeDescription}" Width="100"/>
                     <GridViewColumn Header="Цвет" DisplayMemberBinding="{Binding Path=Color}" Width="40"/>
-                    <GridViewColumn Header="Параметры" DisplayMemberBinding="{Binding Path=Parameters}" Width="100"/>
-                    <GridViewColumn Header="Алгоритм" DisplayMemberBinding="{Binding Path=IsMyAlgorythm}" Width="100"/>
+                    <GridViewColumn Header="Параметры" DisplayMemberBinding="{Binding Path=Description}" Width="100"/>
+                    <GridViewColumn Header="Алгоритм" DisplayMemberBinding="{Binding Path=AlgorithmDescription}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -35,35 +35,68 @@
                         <TextBox Name="TextBoxSegmentX2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
                         <Label>,</Label>
                         <TextBox Name="TextBoxSegmentY2" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                        <Label>)</Label>
-                        <Button x:Name="DrawSegmentButton" VerticalAlignment="Center" Click="DrawSegmentButton_Click">Нарисовать</Button>
+                        <Label>).</Label>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>Цвет:</Label>
                         <xctk:ColorPicker Name="ColorPickerSegmentColor" SelectedColor="Black" Width="40"></xctk:ColorPicker>
                         <Label>Алгоритм:</Label>
                         <ComboBox Name="ComboBoxSegmentAlgotithm">
-                            <ComboBoxItem IsSelected="True">Стандартный</ComboBoxItem>
-                            <ComboBoxItem>Брезенхема</ComboBoxItem>
+                            <ComboBoxItem Tag="Standard" IsSelected="True">Стандартный</ComboBoxItem>
+                            <ComboBoxItem Tag="Bresenham">Брезенхема</ComboBoxItem>
                         </ComboBox>
+                        <Button Margin="5 0 0 0" Name="DrawSegmentButton" VerticalAlignment="Center" Click="DrawSegmentButton_Click">Нарисовать</Button>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Окружность">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
+                        <Label>Окружность с центром в точке (</Label>
+                        <TextBox Name="TextBoxCircleX" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>, </Label>
+                        <TextBox Name="TextBoxCircleY" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>) радиуса </Label>
+                        <TextBox Name="TextBoxCircleR" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
+                        <Label>.</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <Label>Цвет:</Label>
                         <xctk:ColorPicker Name="ColorPickerCircleColor" SelectedColor="Black" Width="40"></xctk:ColorPicker>
                         <Label>Алгоритм:</Label>
                         <ComboBox Name="ComboBoxCircleAlgotithm">
-                            <ComboBoxItem IsSelected="True">Стандартный</ComboBoxItem>
-                            <ComboBoxItem>Брезенхема</ComboBoxItem>
+                            <ComboBoxItem Tag="Standard" IsSelected="True">Стандартный</ComboBoxItem>
+                            <ComboBoxItem Tag="Bresenham">Брезенхема</ComboBoxItem>
                         </ComboBox>
+                        <Button Margin="5 0 0 0" Name="DrawCircleButton" VerticalAlignment="Center" Click="DrawCircleButton_Click">Нарисовать</Button>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Эллипс">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Эллипс с центром в точке (</Label>
+                        <TextBox Name="TextBoxEllipseX" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>,</Label>
+                        <TextBox Name="TextBoxEllipseY" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
+                        <Label>) вертикального радиуса</Label>
+                        <TextBox Name="TextBoxEllipseRx" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
+                        <Label>и горизонтального радиуса</Label>
+                        <TextBox Name="TextBoxEllipseRy" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Цвет:</Label>
+                        <xctk:ColorPicker Name="ColorPickerEllipseColor" SelectedColor="Black" Width="40"></xctk:ColorPicker>
+                        <Label>Алгоритм:</Label>
+                        <ComboBox Name="ComboBoxEllipseAlgotithm">
+                            <ComboBoxItem Tag="Standard" IsSelected="True">Стандартный</ComboBoxItem>
+                            <ComboBoxItem Tag="Bresenham">Брезенхема</ComboBoxItem>
+                        </ComboBox>
+                        <Button Margin="5 0 0 0" Name="DrawEllipseButton" VerticalAlignment="Center" Click="DrawEllipseButton_Click">Нарисовать</Button>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
         </TabControl>
-
-        <Image Name="ResultingImage"/>
+        <Canvas Name="CanvasResultingImage" Loaded="CanvasResultingImage_Loaded"></Canvas>
     </DockPanel>
 </Window>

@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Windows.Controls;
 using System.Drawing;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace EditorCanvasLib
 {
     public class EditorCanvas
     {
+        public List<Primitive> DrawnPrimitives { get; }
         private int actualScale = 1;
         public int Width { get; set; }
         public int Height { get; set; }
@@ -19,15 +23,16 @@ namespace EditorCanvasLib
             }
         }
         private readonly Bitmap basicBitmap, scaledBitmap;
-        public Image Picture { get { return scaledBitmap; } }
-        public EditorCanvas(int width = 1, int height = 1)
+        public EditorCanvas(System.Windows.Controls.Canvas canvas)
         {
-            Width = width;
-            Height = height;
+            Width = (int)canvas.ActualHeight;
+            Height = (int) canvas.ActualHeight;
             basicBitmap = new Bitmap(Width, Height);
             scaledBitmap = new Bitmap(Width, Height);
+            DrawnPrimitives = new List<Primitive>();
         }
-
+        public void AddPrimitive(Primitive primitive) =>
+            DrawnPrimitives.Add(primitive);
         public void DrawStandardSegment(Pen pen, Point firstPoint, Point secondPoint)
         {
             using (Graphics g = Graphics.FromImage(basicBitmap))

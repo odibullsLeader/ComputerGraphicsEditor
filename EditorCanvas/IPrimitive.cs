@@ -19,9 +19,9 @@ namespace EditorCanvasLib
             TypesOfPrimitive.Ellipse => "Эллипс",
             _ => "Ошибка"
         };
-        abstract protected TypesOfPrimitive Type { get; }
+        abstract public TypesOfPrimitive Type { get; }
         abstract public string AlgorithmDescription { get; }
-        protected Enum Algorithm { get; set; }
+        public Enum Algorithm { get; set; }
         public Color Color { get; protected set; }
         abstract public string Description { get; }
     }

@@ -6,8 +6,8 @@ namespace EditorCanvasLib
     public enum CircleAlgorithms { Standard, Bresenham }
     public class Circle : Primitive
     {
-        override protected TypesOfPrimitive Type => TypesOfPrimitive.Circle;
-        override public string Description => $"O({Center.Item1}, {Center.Item2}), R = {Radius}";
+        override public TypesOfPrimitive Type => TypesOfPrimitive.Circle;
+        override public string Description => $"({Center.Item1}, {Center.Item2}), R={Radius}";
         public override string AlgorithmDescription => Algorithm switch
         {
             CircleAlgorithms.Bresenham => "Брезенхем",

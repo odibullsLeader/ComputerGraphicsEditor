@@ -11,14 +11,28 @@
         <ListView Name="ListViewDisplayedElements" DockPanel.Dock="Right">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Gray"></SolidColorBrush>
+                        </Setter.Value></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Тип примитива" DisplayMemberBinding="{Binding Path=TypeDescription}" Width="100"/>
-                    <GridViewColumn Header="Цвет" DisplayMemberBinding="{Binding Path=Color}" Width="40"/>
-                    <GridViewColumn Header="Параметры" DisplayMemberBinding="{Binding Path=Description}" Width="100"/>
+                    <GridViewColumn Header="Цвет"  Width="40">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Rectangle Width="30" Height="10">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding Path=Color}"></SolidColorBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Параметры" DisplayMemberBinding="{Binding Path=Description}" Width="180"/>
                     <GridViewColumn Header="Алгоритм" DisplayMemberBinding="{Binding Path=AlgorithmDescription}" Width="100"/>
                 </GridView>
             </ListView.View>
@@ -54,9 +68,9 @@
                     <StackPanel Orientation="Horizontal">
                         <Label>Окружность с центром в точке (</Label>
                         <TextBox Name="TextBoxCircleX" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                        <Label>, </Label>
+                        <Label>,</Label>
                         <TextBox Name="TextBoxCircleY" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                        <Label>) радиуса </Label>
+                        <Label>) радиуса</Label>
                         <TextBox Name="TextBoxCircleR" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
                         <Label>.</Label>
                     </StackPanel>
@@ -79,7 +93,10 @@
                         <TextBox Name="TextBoxEllipseX" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
                         <Label>,</Label>
                         <TextBox Name="TextBoxEllipseY" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidateNumber"></TextBox>
-                        <Label>) вертикального радиуса</Label>
+                        <Label>)</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>вертикального радиуса</Label>
                         <TextBox Name="TextBoxEllipseRx" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
                         <Label>и горизонтального радиуса</Label>
                         <TextBox Name="TextBoxEllipseRy" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
@@ -97,6 +114,6 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-        <Canvas Name="CanvasResultingImage" Loaded="CanvasResultingImage_Loaded"></Canvas>
+        <Canvas Name="CanvasResultingImage" Loaded="CanvasResultingImage_Loaded" ClipToBounds="True"></Canvas>
     </DockPanel>
 </Window>

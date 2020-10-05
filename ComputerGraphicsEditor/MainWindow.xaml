@@ -97,9 +97,9 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>вертикального радиуса</Label>
-                        <TextBox Name="TextBoxEllipseRx" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
-                        <Label>и горизонтального радиуса</Label>
                         <TextBox Name="TextBoxEllipseRy" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
+                        <Label>и горизонтального радиуса</Label>
+                        <TextBox Name="TextBoxEllipseRx" VerticalAlignment="Center" PreviewKeyDown="TextBox_PreviewTextInput" TextChanged="TextBox_ValidatePositiveNumber"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>Цвет:</Label>
@@ -114,6 +114,6 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-        <Canvas Name="CanvasResultingImage" Loaded="CanvasResultingImage_Loaded" ClipToBounds="True"></Canvas>
+        <Canvas UseLayoutRounding="True" Name="CanvasResultingImage" Loaded="CanvasResultingImage_Loaded" ClipToBounds="True"></Canvas>
     </DockPanel>
 </Window>

@@ -15,18 +15,9 @@ namespace EditorCanvasLib
         public List<Primitive> DrawnPrimitives { get; }
         public Canvas CanvasElement { get; private set; }
         public System.Windows.Controls.Image ImageElement { get; private set; }
-        private System.Windows.Size size;
-        public System.Windows.Size Size
-        {
-            get => size;
-            private set
-            {
-                basicBitmap = new Bitmap((int)value.Width, (int)value.Height);
-                size = value;
-            }
-        }
-        private int Width => (int)Size.Width;
-        private int Height => (int)Size.Height;
+        private System.Windows.Size CanvasSize { get => CanvasElement.RenderSize; }
+        private int Width => (int)(CanvasSize.Width * PresentationSource.FromVisual(CanvasElement).CompositionTarget.TransformToDevice.M22);
+        private int Height => (int)(CanvasSize.Height * PresentationSource.FromVisual(CanvasElement).CompositionTarget.TransformToDevice.M11);
         private Bitmap basicBitmap;
 
         private BitmapImage BM()
@@ -42,11 +33,9 @@ namespace EditorCanvasLib
         }
         public EditorCanvas(Canvas canvas)
         {
-            Size = new System.Windows.Size(canvas.ActualWidth, canvas.ActualHeight);
             CanvasElement = canvas;
-            canvas.SizeChanged += (sender, eventArgs) =>
-                 Size = eventArgs.NewSize;
-            canvas.Children.Add(ImageElement = new System.Windows.Controls.Image());
+            CanvasElement.SizeChanged += (sender, eventArgs) => { };
+            CanvasElement.Children.Add(ImageElement = new System.Windows.Controls.Image());
             basicBitmap = new Bitmap(Width, Height);
             DrawnPrimitives = new List<Primitive>();
         }
@@ -102,7 +91,8 @@ namespace EditorCanvasLib
                         Action<System.Drawing.Pen, System.Drawing.Point, System.Drawing.Point> draw =
                               primitive.Algorithm switch
                               {
-                                  SegmentAlgorithms.Standard => DrawStandardEllipse,
+                                  EllipseAlgorithms.Standard => DrawStandardEllipse,
+                                  EllipseAlgorithms.Bresenham => DrawMyEllipse,
                                   _ => throw new Exception()
                               };
                         draw(
@@ -132,7 +122,15 @@ namespace EditorCanvasLib
         public void DrawStandardEllipse(System.Drawing.Pen Pen, System.Drawing.Point topLeftCorner, System.Drawing.Point bottomRightCorner)
         {
             using Graphics g = Graphics.FromImage(basicBitmap);
-            g.DrawEllipse(Pen, new Rectangle(topLeftCorner.X, topLeftCorner.Y, bottomRightCorner.X, bottomRightCorner.Y));
+            g.DrawEllipse(
+                Pen,
+                new Rectangle(
+                    topLeftCorner.X,
+                    topLeftCorner.Y,
+                    Math.Abs(bottomRightCorner.X - topLeftCorner.X),
+                    Math.Abs(bottomRightCorner.Y - topLeftCorner.Y)
+                    )
+                );
         }
         private void SetPixelIfItIsInBounds(int x, int y, System.Drawing.Pen Pen)
         {
@@ -193,9 +191,9 @@ namespace EditorCanvasLib
                 SetPixelIfItIsInBounds(-x + center.X, -y + center.Y, Pen);
             }
         }
-        //public void DrawMyEllipse(System.Drawing.Pen System.Drawing.Pen, System.Drawing.Point topLeftCorner, System.Drawing.Point bottomRightCorner)
-        //{
+        public void DrawMyEllipse(System.Drawing.Pen Pen, System.Drawing.Point topLeftCorner, System.Drawing.Point bottomRightCorner)
+        {
 
-        //}
+        }
     }
 }

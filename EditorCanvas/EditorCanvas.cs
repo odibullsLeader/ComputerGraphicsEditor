@@ -85,8 +85,8 @@ namespace EditorCanvasLib
                         Action<System.Drawing.Pen, System.Drawing.Point, int> draw =
                               primitive.Algorithm switch
                               {
-                                  SegmentAlgorithms.Standard => DrawStandardCircle,
-                                  SegmentAlgorithms.Bresenham => DrawMyCircle,
+                                  CircleAlgorithms.Standard => DrawStandardCircle,
+                                  CircleAlgorithms.Bresenham => DrawMyCircle,
                                   _ => throw new Exception()
                               };
                         draw(

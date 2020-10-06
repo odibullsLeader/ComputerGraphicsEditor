@@ -98,7 +98,7 @@ namespace ComputerGraphicsEditor
             if (pattern.IsMatch(textBox.Text))
                 return;
             textBox.Text = textBeforeInput;
-            textBox.CaretIndex = index - 1;
+            textBox.CaretIndex = Math.Max(0, index - 1);
         }
 
         private static readonly Regex NumberRegex = new Regex(@"^(-|\+)?\d*$");

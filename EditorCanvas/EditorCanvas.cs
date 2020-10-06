@@ -88,7 +88,7 @@ namespace EditorCanvasLib
                     break;
                 case TypesOfPrimitive.Ellipse:
                     {
-                        Action<System.Drawing.Pen, System.Drawing.Point, System.Drawing.Point> draw =
+                        Action<System.Drawing.Pen, (int, int), (int, int)> draw =
                               primitive.Algorithm switch
                               {
                                   EllipseAlgorithms.Standard => DrawStandardEllipse,
@@ -97,12 +97,14 @@ namespace EditorCanvasLib
                               };
                         draw(
                             pen,
-                            new System.Drawing.Point(
-                                (primitive as Ellipse).TopLeftPoint.Item1,
-                                (primitive as Ellipse).TopLeftPoint.Item2),
-                            new System.Drawing.Point(
-                                (primitive as Ellipse).BottomRightPoint.Item1,
-                                (primitive as Ellipse).BottomRightPoint.Item2));
+                            (
+                                ((primitive as Ellipse).TopLeftPoint.Item1 + (primitive as Ellipse).BottomRightPoint.Item1) / 2,
+                                ((primitive as Ellipse).TopLeftPoint.Item2 + (primitive as Ellipse).BottomRightPoint.Item2) / 2
+                            ),
+                            (
+                                ((primitive as Ellipse).BottomRightPoint.Item1 - (primitive as Ellipse).TopLeftPoint.Item1) / 2,
+                                ((primitive as Ellipse).BottomRightPoint.Item2 - (primitive as Ellipse).TopLeftPoint.Item2) / 2)
+                            );
                     }
                     break;
             }
@@ -119,16 +121,16 @@ namespace EditorCanvasLib
             using Graphics g = Graphics.FromImage(basicBitmap);
             g.DrawEllipse(Pen, new Rectangle(center.X - radius, center.Y - radius, 2 * radius, 2 * radius));
         }
-        public void DrawStandardEllipse(System.Drawing.Pen Pen, System.Drawing.Point topLeftCorner, System.Drawing.Point bottomRightCorner)
+        public void DrawStandardEllipse(System.Drawing.Pen Pen, (int, int) center, (int, int) radiusesXY)
         {
+            (int a, int b) = radiusesXY;
             using Graphics g = Graphics.FromImage(basicBitmap);
             g.DrawEllipse(
                 Pen,
                 new Rectangle(
-                    topLeftCorner.X,
-                    topLeftCorner.Y,
-                    Math.Abs(bottomRightCorner.X - topLeftCorner.X),
-                    Math.Abs(bottomRightCorner.Y - topLeftCorner.Y)
+                    center.Item1 - a,
+                    center.Item2 - b,
+                    2 * a, 2 * b
                     )
                 );
         }
@@ -191,9 +193,68 @@ namespace EditorCanvasLib
                 SetPixelIfItIsInBounds(-x + center.X, -y + center.Y, Pen);
             }
         }
-        public void DrawMyEllipse(System.Drawing.Pen Pen, System.Drawing.Point topLeftCorner, System.Drawing.Point bottomRightCorner)
+        public void DrawMyEllipse(System.Drawing.Pen Pen, (int, int) center, (int, int) radiusesXY)
         {
+            (int a, int b) = radiusesXY;
+            int x = 0,
+                y = b,
+                d = a * a + b * b - 2 * a * a * b;
+            SetPixelIfItIsInBounds(x + center.Item1, y + center.Item2, Pen);
+            SetPixelIfItIsInBounds(-x + center.Item1, y + center.Item2, Pen);
+            SetPixelIfItIsInBounds(x + center.Item1, -y + center.Item2, Pen);
+            SetPixelIfItIsInBounds(-x + center.Item1, -y + center.Item2, Pen);
+            while (y > 0)
+            {
+                if (d > 0)
+                {
+                    if (d - b * b * (2 * x - 1) > 0)
+                    {
+                        d -= a * a * (2 * y - 3);
+                        --y;
+                    }
+                    else
+                    {
+                        if (2 * d - b * b * (2 * x - 1) > 0)
+                        {
+                            d -= a * a * (2 * y - 3);
+                            --y;
+                        }
+                        else
+                        {
+                            d += b * b * (2 * x + 3) - a * a * (2 * y - 3);
+                            --y;
+                            ++x;
+                        }
+                    }
+                }
+                else
+                {
+                    if (d + a * a * (2 * y - 1) > 0)
+                    {
+                        if (2 * d - a * a * (2 * y - 1) > 0)
+                        {
+                            d += b * b * (2 * x + 3) - a * a * (2 * y - 3);
+                            --y;
+                            ++x;
+                        }
+                        else
+                        {
+                            d += b * b * (2 * x + 3);
+                            ++x;
+                        }
+                    }
+                    else
+                    {
+                        d += b * b * (2 * x + 3);
+                        ++x;
+                    }
+                }
 
+                SetPixelIfItIsInBounds(x + center.Item1, y + center.Item2, Pen);
+                SetPixelIfItIsInBounds(-x + center.Item1, y + center.Item2, Pen);
+                SetPixelIfItIsInBounds(x + center.Item1, -y + center.Item2, Pen);
+                SetPixelIfItIsInBounds(-x + center.Item1, -y + center.Item2, Pen);
+            }
         }
     }
 }
